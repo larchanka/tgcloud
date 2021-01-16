@@ -1,0 +1,52 @@
+{
+  "name": "telegram-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp",
+    "start": "nodemon ./src",
+    "prod": "NODE_ENV=production forever ./src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "express-session": "^1.17.1",
+    "fileger": "^1.1.0",
+    "forever": "^3.0.4",
+    "got": "^11.8.1",
+    "js-sha256": "^0.9.0",
+    "memorystore": "^1.6.4",
+    "mongoose": "^5.11.9",
+    "node-telegram-bot-api": "^0.51.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "autoprefixer": "^10.2.1",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-clean-dir": "^1.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-concat-css": "^3.1.0",
+    "gulp-copy": "^4.0.1",
+    "gulp-csso": "^4.0.1",
+    "gulp-html-replace": "^1.6.2",
+    "gulp-uglify": "^3.0.2",
+    "gulp-uglifycss": "^1.1.0",
+    "nodemon": "^2.0.6",
+    "postcss": "^8.2.4"
+  }
+}
