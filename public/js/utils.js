@@ -23,7 +23,7 @@ const onTelegramAuth = (user) => {
         }
     })
     .then(() => {
-        document.getElementById('root').innerHTML = '<layout-header></layout-header><application-root route="' + document.location.hash.replace('#', '') + '"></application-root>';
+        document.getElementById('root').innerHTML = '<layout-header></layout-header><application-root route="' + document.location.pathname + '"></application-root>';
     });
 }
 

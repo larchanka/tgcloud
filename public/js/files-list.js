@@ -103,7 +103,7 @@ class FilesList extends HTMLElement {
 
     renderFiles(files = []) {
         if (!files.length) {
-            this.innerHTML = 'Files not found'
+            this.innerHTML = '<center>Files not found</center>'
         } else {
             const userId = Number(this.getAttribute('userid'));
             this.innerHTML = `

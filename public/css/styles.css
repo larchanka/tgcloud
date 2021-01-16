@@ -56,6 +56,14 @@ button {
     font-size: 1.4rem;
 }
 
+#app-root {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
 /* HEADER */
 
 .header-container {
@@ -150,6 +158,9 @@ button {
 .file-item > a {
     display: block;
     flex: 3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .file-item > .file-date {
@@ -291,7 +302,7 @@ h1.file-name {
 
 .modal {
     background-color: #fff;
-    box-shadow: 0 0 2rem #eee;
+    box-shadow: 0 0 2rem #ccc;
     width: 90%;
 }
 

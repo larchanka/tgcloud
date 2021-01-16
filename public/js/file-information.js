@@ -78,7 +78,7 @@ class FileInformation extends HTMLElement {
                     callback: () => {
                         deleteFile(fileData._id, asssetData.assetHash)
                             .then(() => {
-                                document.location.hash = '/';
+                                document.location = '/';
                             });
                     }
                 });
