@@ -123,6 +123,7 @@ class FilesList extends HTMLElement {
                                     createdAt="${fileData.createdAt}"
                                     fileSize="${fileData.assetSize}"
                                     fileChecksum="${fileData.assetHash}"
+                                    isPrivate="${file.isPrivate}"
                                 ></file-item>
                             `;
                         }).join('')}

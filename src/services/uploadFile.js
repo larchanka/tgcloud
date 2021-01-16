@@ -66,6 +66,7 @@ const uploadFile = (req, res) => {
                             updatedAt: creationDate,
                             originalName: uploadedFile.name,
                             originalSize: uploadedFile.size,
+                            isPrivate: true,
                             vc: [
                                 {
                                     assetHash: fileChecksum,

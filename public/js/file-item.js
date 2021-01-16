@@ -36,12 +36,22 @@ class FileItem extends HTMLElement {
         const fileChecksum = this.getAttribute('fileChecksum');
         const createdAt = this.getAttribute('createdAt');
         const fileSize = Number(this.getAttribute('fileSize'));
+        const isPrivate = this.getAttribute('isPrivate') === 'true';
+        const isOwner = userId === createdBy
 
         this.innerHTML = `
             <li id="file-${id}" class="file-item">
                 <span class="file-icon-span ${iconClass}"></span>
-                ${userId !== createdBy ? '<small class="shared">&#128169;</small>' : ''}
-                <a href="#/file/${id}">${fileName}</a>
+                <a href="/file/${id}">
+                    ${fileName}
+                    ${!isOwner ? `<small class="shared">
+                    <img src="/img/user-group.svg" alt="shared" />
+                    </small>` : `
+                        <small class="shared">
+                            <img src="/img/${isPrivate ? 'shield' : 'padlock'}.svg" alt="shared" />
+                        </small>
+                    `}
+                </a>
                 <div class="file-date">${formatDate(createdAt, true)}</div>
                 <div class="file-size">
                     ${formatSizeUnits(fileSize)}

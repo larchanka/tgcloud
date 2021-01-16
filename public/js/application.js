@@ -61,7 +61,7 @@ class App extends HTMLElement {
 
     renderRoutes() {
         const router = new Router({
-            mode: 'hash',
+            mode: 'history',
             root: '/'
         });
         

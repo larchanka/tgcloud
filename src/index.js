@@ -2,6 +2,7 @@ require('dotenv').config({});
 require('./db');
 
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cors = require('cors');
@@ -36,8 +37,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use('/', express.static(process.env.NODE_ENV === 'production' ? 'build/public' : 'public'));
-
 app.get('/health', function (req, res) {
     console.log('[INFO]', new Date(), 'Health Check route is called');
 
@@ -70,6 +69,12 @@ const router = express.Router();
 app.post('/signin', signin);
 
 app.use('/api/v1', authentication, api(router));
+
+app.use('/', express.static(process.env.NODE_ENV === 'production' ? 'build/public' : 'public'));
+
+app.use((_req, res) => {
+    res.sendFile(path.resolve(__dirname, process.env.NODE_ENV === 'production' ? '../build/public/index.html' : '../public/index.html'));
+});
 
 app.listen(process.env.PORT, () => {
     console.log('[INFO]', new Date(), `Example app listening at http://localhost:${process.env.PORT}`)

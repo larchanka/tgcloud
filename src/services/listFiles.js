@@ -7,7 +7,7 @@ const listFiles = (req, res) => {
     const findOptions = {
         $or: [
             { createdBy: req.session.user.id },
-            { private: false },
+            { isPrivate: false },
         ]
     };
     let filterOptions = { sort: { updatedAt: -1 } };
