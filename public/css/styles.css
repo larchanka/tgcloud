@@ -256,6 +256,14 @@ button {
     width: 50%;
 }
 
+h1.file-name {
+    margin-bottom: 1rem;
+}
+
+.file-size, .file-date {
+    margin-bottom: 0.5rem;
+}
+
 /* MODALS */
 
 .modal-container {

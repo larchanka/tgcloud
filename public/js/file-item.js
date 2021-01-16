@@ -71,7 +71,7 @@ class FileItem extends HTMLElement {
                                     loadFiles();
                                 });
                         }
-                    })
+                    });
                 }
             },
         ];

@@ -40,10 +40,13 @@ class FileInformation extends HTMLElement {
                 <div class="container">
                     <div class="file-information">
                         <div class="file-data">
-                            <h1><span class="${iconClass}"></span>${asssetData.assetName}</h1>
-                            <div>Size: ${formatSizeUnits(asssetData.assetSize)}</div>
-                            <div>${formatDate(asssetData.createdAt)}</div>
-                            <a href="/api/v1/file/${fileData._id}/${asssetData.assetHash}" download="${asssetData.assetName}">Download</a>
+                            <h1 class="file-name"><span class="${iconClass}"></span>${asssetData.assetName}</h1>
+                            <div class="file-size">Size: ${formatSizeUnits(asssetData.assetSize)}</div>
+                            <div class="file-date">${formatDate(asssetData.createdAt)}</div>
+                            <div class="file-actions">
+                                <a href="/api/v1/file/${fileData._id}/${asssetData.assetHash}" download="${asssetData.assetName}">Download</a>
+                                <button id="file-${asssetData.assetHash}">Delete</button>
+                            </div>
                         </div>
                         <div class="file-preview">
                             ${['mp4', 'mov', 'wmv'].indexOf(fileType) > -1
@@ -68,6 +71,18 @@ class FileInformation extends HTMLElement {
                         </div>
                 </div>
             `;
+
+            document.getElementById(`file-${asssetData.assetHash}`).addEventListener('click', () => {
+                showConfirm({
+                    text: `Are you sure you want to delete ${asssetData.assetName}?`,
+                    callback: () => {
+                        deleteFile(fileData._id, asssetData.assetHash)
+                            .then(() => {
+                                document.location.hash = '/';
+                            });
+                    }
+                });
+            })
 
             if (fileType === 'pdf') {
                 PDFObject.embed(`/api/v1/file/${fileData._id}/${asssetData.assetHash}`, "#pdf-preview", { height: '40vh'});
