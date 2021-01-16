@@ -122,6 +122,7 @@ class FilesList extends HTMLElement {
                                     fileName="${fileData.assetName}"
                                     createdAt="${fileData.createdAt}"
                                     fileSize="${fileData.assetSize}"
+                                    fileChecksum="${fileData.assetHash}"
                                 ></file-item>
                             `;
                         }).join('')}

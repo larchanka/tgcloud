@@ -4,6 +4,7 @@ const getFile = require('./getFile');
 const getFileInformation = require('./getFileInformation');
 const listFiles = require('./listFiles');
 const uploadFile = require('./uploadFile');
+const deleteFile = require('./deleteFile');
 
 function initApi(router) {
     console.log('[INFO]', new Date(), 'Initiate API');
@@ -12,6 +13,7 @@ function initApi(router) {
     router.get('/files(/filter/:filter)?', listFiles);
     router.get('/files/:id', getFileInformation);
     router.get('/file/:id/:checksum', getFile);
+    router.delete('/file/:id/:checksum', deleteFile);
 
     return router;
 };

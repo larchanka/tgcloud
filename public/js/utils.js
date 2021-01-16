@@ -26,3 +26,43 @@ const onTelegramAuth = (user) => {
         document.getElementById('root').innerHTML = '<layout-header></layout-header><application-root route="' + document.location.hash.replace('#', '') + '"></application-root>';
     });
 }
+
+const deleteFile = (fileId, checksum) => {
+    return fetch(`/api/v1/file/${fileId}/${checksum}`, { method: 'delete' })
+        .then(resp => resp.json());
+}
+
+const showConfirm = (options) => {
+    const modalId = new Date().getTime();
+    const html = `
+    <div class="modal-container" id="modal-${modalId}">
+        <div class="modal confirm">
+            <div class="modal-body">
+                <h2>${options.text}</h2>
+            </div>
+            <div class="modal-btns">
+                <button
+                    id="modal-${modalId}-cancel"
+                >Cancel</button>
+                <button
+                    id="modal-${modalId}-confirm"
+                    class="btn-danger"
+                >Confirm</button>
+            </div>
+        </div>
+    </div>
+    `;
+
+    document.getElementById('modals').innerHTML = html;
+
+    document.getElementById(`modal-${modalId}-cancel`).addEventListener('click', () => {
+        document.getElementById(`modal-${modalId}`).remove();
+    });
+
+    document.getElementById(`modal-${modalId}-confirm`).addEventListener('click', () => {
+        if (options.callback) {
+            options.callback();
+        }
+        document.getElementById(`modal-${modalId}`).remove();
+    });
+}

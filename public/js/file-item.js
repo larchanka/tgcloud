@@ -33,6 +33,7 @@ class FileItem extends HTMLElement {
         const userId = Number(this.getAttribute('userId'));
         const createdBy = Number(this.getAttribute('createdBy'));
         const fileName = this.getAttribute('fileName');
+        const fileChecksum = this.getAttribute('fileChecksum');
         const createdAt = this.getAttribute('createdAt');
         const fileSize = Number(this.getAttribute('fileSize'));
 
@@ -44,18 +45,33 @@ class FileItem extends HTMLElement {
                 <div class="file-date">${formatDate(createdAt, true)}</div>
                 <div class="file-size">
                     ${formatSizeUnits(fileSize)}
-                    <button class="icon-btn" disabled>share</button>
                 </div>
             </li>
         `;
 
         const menuItems = [
             {
-                title:'Delete',
+                title: 'Share',
                 tip: '',
-                icon: './img/delete.svg',
+                icon: './img/share.svg',
                 onclick: function() {
                     console.log('Item 1 clicked');
+                }
+            },
+            {
+                title: 'Delete',
+                tip: '',
+                icon: './img/delete.svg',
+                onclick: () => {
+                    showConfirm({
+                        text: `Are you sure you want to delete ${fileName}?`,
+                        callback: () => {
+                            deleteFile(id, fileChecksum)
+                                .then(() => {
+                                    loadFiles();
+                                });
+                        }
+                    })
                 }
             },
         ];
