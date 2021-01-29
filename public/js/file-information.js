@@ -6,15 +6,7 @@ class FileInformation extends HTMLElement {
     connectedCallback() {
         this.innerHTML = '<layout-loader text="Loading file..."></layout-loader>';
 
-        this.loadFile()
-            .then((res) => {
-                if (res.status === 'error') window.renderLogin();
-                
-                this.renderFile(res);
-            })
-            .catch((_err) => {
-                window.renderLogin();
-            });
+        this.loadFile();
     }
   
     disconnectedCallback() {
@@ -25,7 +17,29 @@ class FileInformation extends HTMLElement {
         const fileId = this.getAttribute('fileid');
 
         return fetch('/api/v1/files/' + fileId)
-            .then(res => res.json());
+            .then(res => res.json()).then((res) => {
+                if (res.status === 'error') window.renderLogin();
+                
+                this.renderFile(res);
+            })
+            .catch((_err) => {
+                window.renderLogin();
+            });
+    }
+
+    setFilePrivacy = async (e) => {
+        e.preventDefault();
+        const fileId = this.getAttribute('fileid');
+
+        try {
+            const res = await fetch('/api/v1/files/' + fileId + '/privacy/' + (e.target.checked ? 'true' : 'false'));
+            const res_1 = await res.json();
+            if (res_1.status === 'error')
+                window.renderLogin();
+
+        } catch (_err) {
+            window.renderLogin();
+        }
     }
 
     renderFile(fileData) {
@@ -35,6 +49,7 @@ class FileInformation extends HTMLElement {
             const asssetData = fileData.vc.pop();
             const iconClass = window.FileIcons.getClassWithColor(asssetData.assetName);
             const fileType = /[^.]+$/.exec(asssetData.assetName)[0];
+            const userId = Number(this.getAttribute('userid'));
 
             this.innerHTML = `
                 <div class="container">
@@ -43,10 +58,20 @@ class FileInformation extends HTMLElement {
                             <h1 class="file-name"><span class="${iconClass}"></span>${asssetData.assetName}</h1>
                             <div class="file-size">Size: ${formatSizeUnits(asssetData.assetSize)}</div>
                             <div class="file-date">${formatDate(asssetData.createdAt)}</div>
-                            <div class="file-actions">
+                            <ul class="file-actions">
+                                <li>
                                 <a href="/api/v1/file/${fileData._id}/${asssetData.assetHash}" download="${asssetData.assetName}">Download</a>
+                                </li>
+                                ${fileData.createdBy === userId ? `
+                                <li>
                                 <button id="file-${asssetData.assetHash}">Delete</button>
-                            </div>
+                                </li>
+                                <li>
+                                <label>
+                                <input type="checkbox" id="isPrivate" /> Is Private
+                                </label>
+                                </li>` : ''}
+                            </ul>
                         </div>
                         <div class="file-preview">
                             ${['mp4', 'mov', 'wmv'].indexOf(fileType) > -1
@@ -72,17 +97,29 @@ class FileInformation extends HTMLElement {
                 </div>
             `;
 
-            document.getElementById(`file-${asssetData.assetHash}`).addEventListener('click', () => {
-                showConfirm({
-                    text: `Are you sure you want to delete ${asssetData.assetName}?`,
-                    callback: () => {
-                        deleteFile(fileData._id, asssetData.assetHash)
-                            .then(() => {
-                                document.location = '/';
-                            });
-                    }
+            const deleteFileEl = document.getElementById(`file-${asssetData.assetHash}`);
+            if (deleteFileEl) {
+                deleteFileEl.addEventListener('click', () => {
+                    showConfirm({
+                        text: `Are you sure you want to delete ${asssetData.assetName}?`,
+                        callback: () => {
+                            deleteFile(fileData._id, asssetData.assetHash)
+                                .then(() => {
+                                    document.location = '/';
+                                });
+                        }
+                    });
                 });
-            })
+            }
+
+            const isPrivateEl = document.getElementById('isPrivate');
+            
+            if (isPrivateEl) {
+                if (fileData.isPrivate) {
+                    document.getElementById('isPrivate').setAttribute('checked', 'checked');
+                }
+                document.getElementById('isPrivate').addEventListener('change', this.setFilePrivacy, true);
+            }
 
             if (fileType === 'pdf') {
                 PDFObject.embed(`/api/v1/file/${fileData._id}/${asssetData.assetHash}`, "#pdf-preview", { height: '40vh'});

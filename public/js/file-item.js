@@ -35,8 +35,9 @@ class FileItem extends HTMLElement {
         const fileName = this.getAttribute('fileName');
         const fileChecksum = this.getAttribute('fileChecksum');
         const createdAt = this.getAttribute('createdAt');
-        const fileSize = Number(this.getAttribute('fileSize'));
         const isPrivate = this.getAttribute('isPrivate') === 'true';
+        const fileSize = Number(this.getAttribute('fileSize'));
+        // const isPrivate = this.getAttribute('isPrivate') === 'true';
         const isOwner = userId === createdBy
 
         this.innerHTML = `

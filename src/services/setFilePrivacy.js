@@ -7,11 +7,11 @@ const config = require('../config');
 const { Asset } = require('../db/models');
 const TelegramBot = require('../telegram');
 
-const deleteFile = (req, res) => {
+const setFilePrivacy = (req, res) => {
     const fileId = req.params.id;
-    const fileChecksum = req.params.checksum;
+    const privacy = req.params.privacy;
 
-    console.log('[INFO]', new Date(), 'Delete file with checksum:', fileChecksum);
+    console.log('[INFO]', new Date(), 'Setting file privacy with id:', fileId);
 
     return Asset.findById(fileId, (err, data) => {
         if (err || !data) {
@@ -32,30 +32,26 @@ const deleteFile = (req, res) => {
             });
         }
 
-        data.vc.forEach(f => {
-            if (fs.existsSync(f.localAssetPath)) {
-                fs.inlinkSync(f.localAssetPath);
-            }
-        });
-
-        Asset.deleteOne({_id: fileId}, (err, _resp) => {
+        Asset.updateOne({_id: fileId}, {
+            isPrivate: privacy === 'true',
+        }, (err, _resp) => {
             if (err || !data) {
-                console.log('[ERROR]', new Date(), 'File cannot be deleted. Id:', fileId);
+                console.log('[ERROR]', new Date(), 'File privacy cannot be changed. Id:', fileId);
     
                 return res.status(500).send({
                     status: 'error',
-                    message: 'Cannot delete file',
+                    message: 'Cannot change file privacy',
                     responseTime: new Date(),
                 });
             }
 
             return res.send({
                 status: 'ok',
-                message: 'File deleted',
+                message: 'File privacy changed',
                 responseTime: new Date(),
             });
         });
     });
 };
 
-module.exports = deleteFile;
+module.exports = setFilePrivacy;

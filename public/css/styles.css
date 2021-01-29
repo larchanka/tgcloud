@@ -111,7 +111,7 @@ button {
 /* FILE LIST */
 
 .file-list-actions {
-
+    display: block;
 }
 
 .shared {
@@ -234,14 +234,26 @@ button {
 
 /* UPLOAD */
 
+.upload-file {
+
+}
+
 #drop-area {
     border: .1rem dashed #ccc;
     border-radius: .5rem;
-    width: 30rem;
+    width: 100%;
     font-family: sans-serif;
     margin: 0 auto;
     padding: 0 2rem;
-    line-height: 10rem;
+    line-height: 50vh;
+    margin-bottom: 1rem;
+}
+
+#drop-area label {
+    display: block;
+    line-height: 50vh;
+    text-align: center;
+    font-size: 1.4rem;
 }
 
 #drop-area.highlight {

@@ -20,7 +20,7 @@ const UserRole = mongoose.model('userrole', userRoleSchema);
 const accessSchema = new Schema({
     type: String, // category | asset
     userId: Number,
-    id: String,
+    roleId: String,
     permissions: {
         write: Boolean,
         read: Boolean,
@@ -44,9 +44,10 @@ const assetSchema = new Schema({
     tags: Array,
     categories: Array,
     createdBy: Number,
-    createdAT: Date,
+    createdAt: Date,
     updatedAt: Date,
     isPrivate: Boolean,
+    isEncrypted: Boolean,
     originalName: String,
     originalSize: Number,
     vc: [
@@ -69,4 +70,5 @@ module.exports = {
     UserRole,
     Category,
     Asset,
+    Access,
 };

@@ -22,6 +22,8 @@ const uploadFile = (req, res) => {
     }
 
     const uploadedFile = req.files.selectedFile;
+    const isPrivate = req.body.isPrivate;
+    const isEncrypted = req.body.isEncrypted;
     const uploadPath = config.fileTmpStorage + uploadedFile.name;
 
     // Use the mv() method to place the file somewhere on your server
@@ -38,14 +40,18 @@ const uploadFile = (req, res) => {
         }
 
         const fileChecksum = generateChecksumFromFile(uploadedFile.data);
-        const newFilePath = config.fileTmpStorage + fileChecksum;
+        const newFilePath = isEncrypted === 'true' ? config.fileTmpStorage + fileChecksum : uploadPath;
 
-        // fs.renameSync(uploadPath, newFilePath);
+        const pipeRow = [createReadStream(uploadPath)];
+
+        if (isEncrypted === 'true') {
+            pipeRow.push(createCipheriv('aes-256-cbc', config.fileEncryptionSecret, config.fileEncryptionVector));
+        }
+
+        pipeRow.push(createWriteStream(newFilePath));
 
         promisify(pipeline)(
-            createReadStream(uploadPath),
-            createCipheriv('aes-256-cbc', config.fileEncryptionSecret, config.fileEncryptionVector),
-            createWriteStream(newFilePath)
+            ...pipeRow,
         )
             .then((_data) => {
                 fs.unlinkSync(uploadPath);
@@ -64,9 +70,10 @@ const uploadFile = (req, res) => {
                             createdBy: req.session.user.id,
                             createdAT: creationDate,
                             updatedAt: creationDate,
-                            originalName: uploadedFile.name,
+                            originalName: uploadedFile.name.toLowerCase(),
                             originalSize: uploadedFile.size,
-                            isPrivate: true,
+                            isPrivate: isPrivate === 'true',
+                            isEncrypted: isEncrypted === 'true',
                             vc: [
                                 {
                                     assetHash: fileChecksum,
@@ -98,7 +105,7 @@ const uploadFile = (req, res) => {
                         });
                     })
                     .catch(err => {
-                        console.log('[ERROR]', new Date(), 'File upload to telegram error');
+                        console.log('[ERROR]', new Date(), 'File upload to telegram error', err);
 
                         return res.status(500).send({
                             status: 'error',
