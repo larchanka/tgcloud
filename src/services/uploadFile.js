@@ -24,6 +24,7 @@ const uploadFile = (req, res) => {
     const uploadedFile = req.files.selectedFile;
     const isPrivate = req.body.isPrivate;
     const isEncrypted = req.body.isEncrypted;
+    const categoryId = req.body.categoryId;
     const uploadPath = config.fileTmpStorage + uploadedFile.name;
 
     // Use the mv() method to place the file somewhere on your server
@@ -66,7 +67,7 @@ const uploadFile = (req, res) => {
 
                         return Asset.create({
                             tags: [],
-                            categories: [],
+                            categories: categoryId ? [categoryId] : [],
                             createdBy: req.session.user.id,
                             createdAt: creationDate,
                             updatedAt: creationDate,

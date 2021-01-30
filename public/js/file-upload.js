@@ -6,6 +6,7 @@ class FilesUpload extends HTMLElement {
       this.isEncrypted = true;
       this.totalFiles = 0;
       this.filesToUpload = 0;
+      this.categoryId = this.getAttribute('categoryid');
     }
   
     connectedCallback() {
@@ -27,7 +28,7 @@ class FilesUpload extends HTMLElement {
         const handleFiles = (files) => {
             $("#status").empty().text('Uploading');
             this.filesToUpload = files.length;
-            ([...files]).forEach((file) => uploadFile(file, this.isPrivate, this.isEncrypted));
+            ([...files]).forEach((file) => uploadFile(file, this.isPrivate, this.isEncrypted, this.categoryId));
         }
           
         function highlight(e) {
@@ -38,7 +39,7 @@ class FilesUpload extends HTMLElement {
             dropArea.classList.remove('highlight')
         }
 
-        const uploadFile = (file, isPrivate, isEncrypted) => {
+        const uploadFile = (file, isPrivate, isEncrypted, categoryId) => {
             var url = '/api/v1/upload'
             var xhr = new XMLHttpRequest()
             var formData = new FormData()
@@ -54,7 +55,7 @@ class FilesUpload extends HTMLElement {
                     this.totalFiles = 0;
                     this.filesToUpload = 0;
 
-                    document.location.replace('/');
+                    window.loadFiles();
                   }
               }
               else if (xhr.readyState == 4 && xhr.status != 200) {
@@ -66,6 +67,7 @@ class FilesUpload extends HTMLElement {
             formData.append('selectedFile', file);
             formData.append('isEncrypted', isEncrypted);
             formData.append('isPrivate', isPrivate);
+            formData.append('categoryId', categoryId);
             xhr.send(formData)
         }
 
@@ -82,11 +84,11 @@ class FilesUpload extends HTMLElement {
         }
 
         this.innerHTML = `
-        <div class="upload-file container">
+        <div class="upload-file">
             <form id="uploadForm" enctype="multipart/form-data" method="post">
                 <div id="drop-area">
                     <input type="file" id="fileElem" multiple name="selectedFile" />
-                    <label class="button" for="fileElem">Select some files</label>
+                    <label class="button" for="fileElem">Select some files or drop them here</label>
                 </div>
                 <div>
                     <label>

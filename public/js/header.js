@@ -20,7 +20,6 @@ class LayoutHeader extends HTMLElement {
                 </div>
                 <div class="menu">
                     <a href="/">Files</a>
-                    <a href="/upload">Upload</a>
                 </div>
             </div>
         </div>`;

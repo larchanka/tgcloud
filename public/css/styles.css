@@ -251,14 +251,11 @@ file-filters {
 
 .aside {
     width: 20%;
+    padding-right: 1rem;
 }
 
 .aside-content {
     width: 80%;
-}
-
-.categories {
-    padding-right: 1rem;
 }
 
 .categories li a {
@@ -298,15 +295,15 @@ file-filters {
     font-family: sans-serif;
     margin: 0 auto;
     padding: 0 2rem;
-    line-height: 50vh;
     margin-bottom: 1rem;
 }
 
 #drop-area label {
     display: block;
-    line-height: 50vh;
+    line-height: 1;
+    padding: 3rem 0;
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1rem;
 }
 
 #drop-area.highlight {
