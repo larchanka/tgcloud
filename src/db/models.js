@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 // User
 const userSchema = new Schema({
     userId: Number,
-    roleId: String,
+    roleId: { type: Schema.Types.ObjectId, ref: 'userrole' },
 });
 
 const User = mongoose.model('user', userSchema);

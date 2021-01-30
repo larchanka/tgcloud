@@ -69,51 +69,88 @@ class FileInformation extends HTMLElement {
 
             window.document.title = `TgCloud: ${assetData.assetName}`;
 
+            const backUrl = fileData.categories.length ? `/category/${fileData.categories[0]._id}` : '/';
+
+            const formats = {
+                video: ['mp4', 'mov', 'wmv'],
+                image: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+                pdf: ['pdf'],
+                audio: ['mp3', 'wav', 'weba'],
+            };
+
             this.innerHTML = `
                 <div class="container">
                     <div class="file-information">
                         <div class="file-data">
-                            <h1 class="file-name"><span class="${iconClass}"></span>${assetData.assetName}</h1>
-                            <div class="file-size">Size: ${formatSizeUnits(assetData.assetSize)}</div>
-                            <div class="file-date">${formatDate(assetData.createdAt)}</div>
+                            <a href="${backUrl}" class="back-btn">Back to TgCloud</a>
+                            <h1 class="file-name">${assetData.assetName}</h1>
+                            <br />
+                            <h3>Details</h3>
+                            <div class="file-size">
+                                <span class="faded">Size</span>
+                                <br />${formatSizeUnits(assetData.assetSize)}</div>
+                            <br />
+                            <div class="file-date">
+                                <span class="faded">Last modified</span>
+                                <br />
+                                ${formatDate(assetData.createdAt)}</div>
+                            <br />
+                            <br />
                             <ul class="file-actions">
                                 <li>
                                 <a href="/api/v1/file/${fileData._id}/${assetData.assetHash}" download="${assetData.assetName}">Download</a>
                                 </li>
                                 ${fileData.createdBy === userId ? `
                                 <li>
-                                <button class="warning" id="file-${assetData.assetHash}">Delete</button>
+                                <button id="share-${assetData.assetHash}">Share</button>
                                 </li>
                                 <li>
                                 <label>
                                 <input type="checkbox" id="isPrivate" /> Is Private
                                 </label>
                                 </li>
+                                </li>
                                 <li>
-                                <button id="share-${assetData.assetHash}">Share</button>
+                                <button class="warning" id="file-${assetData.assetHash}">Delete</button>
                                 </li>` : ''}
                             </ul>
                             <div id="sharelink" class="share-link"></div>
                         </div>
                         <div class="file-preview">
-                            ${['mp4', 'mov', 'wmv'].indexOf(fileType) > -1
+                            ${formats.video.indexOf(fileType) > -1
                                 ? `<video controls src="/api/v1/file/${fileData._id}/${assetData.assetHash}"></video>`
                                 : ''}
 
-                            ${['jpg', 'jpeg', 'png', 'gif', 'webp'].indexOf(fileType) > -1
+                            ${formats.image.indexOf(fileType) > -1
                                 ? `<img src="/api/v1/file/${fileData._id}/${assetData.assetHash}" alt="${assetData.assetName}">`
                                 : ''}
 
-                            ${['pdf'].indexOf(fileType) > -1
+                            ${formats.pdf.indexOf(fileType) > -1
                                 ? `<div id="pdf-preview"></div>`
                                 : ''}
 
-                            ${['mp3', 'wav', 'weba'].indexOf(fileType) > -1
+                            ${formats.audio.indexOf(fileType) > -1
                                 ? `<audio controls src="/api/v1/file/${fileData._id}/${assetData.assetHash}"></audio>`
                                 : ''}
 
-                            ${['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'rtf'].indexOf(fileType) > -1
-                                ? `<!--${document.location.origin}/api/v1/file/${fileData._id}/${assetData.assetHash}-->`
+                            ${Object.keys(formats).map(k => formats[k]).flat().indexOf(fileType) === -1
+                                ? `
+                                    <div class="unknown-file-preview">
+                                        <div>
+                                            <span class="${iconClass} lg-font icon-u"></span>
+                                        </div>
+                                        <div>
+                                            <strong>.${fileType}</strong> file preview is not supported
+                                        </div>
+                                        <div>
+                                            <small>
+                                                ${assetData.assetName}
+                                                ·
+                                                ${formatSizeUnits(assetData.assetSize)}
+                                            </small>
+                                        </div>
+                                    </div>
+                                `
                                 : ''}
                         </div>
                 </div>
@@ -152,7 +189,7 @@ class FileInformation extends HTMLElement {
             }
 
             if (fileType === 'pdf') {
-                PDFObject.embed(`/api/v1/file/${fileData._id}/${assetData.assetHash}`, "#pdf-preview", { height: '40vh'});
+                PDFObject.embed(`/api/v1/file/${fileData._id}/${assetData.assetHash}`, "#pdf-preview", { height: '100%', width: '100%'});
             }
         }
     }

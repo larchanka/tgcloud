@@ -72,6 +72,9 @@ class FilesListCategories extends HTMLElement {
                     `<li>
                         <a href="/category/${c._id}" id="category-${c._id}" data-categoryid="${c._id}" class="droppable${c._id === this.categoryId ? ' active' : ''}">
                             ${c.categoryTitle}
+                            ${c.isPrivate ? '' : `<small class="shared">
+                            <img src="/img/user-group.svg" alt="shared" />
+                            </small>`}
                         </a>
                     </li>`
                 )).join('')}
