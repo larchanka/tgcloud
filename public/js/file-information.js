@@ -80,7 +80,7 @@ class FileInformation extends HTMLElement {
                                 </li>
                                 ${fileData.createdBy === userId ? `
                                 <li>
-                                <button id="file-${asssetData.assetHash}">Delete</button>
+                                <button class="warning" id="file-${asssetData.assetHash}">Delete</button>
                                 </li>
                                 <li>
                                 <label>

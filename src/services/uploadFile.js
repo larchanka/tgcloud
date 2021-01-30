@@ -96,8 +96,12 @@ const uploadFile = (req, res) => {
 
                             if (!config.useLocalStorage) {
                                 setTimeout(() => {
-                                    fs.unlinkSync(newFilePath);
-                                    console.log('[INFO]', new Date(), 'Local file deleted:', fileChecksum);
+                                    try {
+                                        fs.unlinkSync(newFilePath);
+                                        console.log('[INFO]', new Date(), 'Local file deleted:', fileChecksum);
+                                    } catch(e) {
+
+                                    }
                                 }, 100);
                             }
                         

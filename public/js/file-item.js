@@ -42,7 +42,7 @@ class FileItem extends HTMLElement {
 
         this.innerHTML = `
             <li id="file-${id}" class="file-item">
-                <input type="checkbox" data-file-id="${id}" class="file-checkbox" />
+                <input type="checkbox" id="file-checkbox-${id}" data-file-id="${id}" class="file-checkbox file-checkbox-item" />
                 &nbsp;
                 <span class="file-icon-span ${iconClass}"></span>
                 <a href="/file/${id}">
@@ -96,6 +96,8 @@ class FileItem extends HTMLElement {
                 items: menuItems,
             });
         });
+
+        document.getElementById(`file-checkbox-${id}`).addEventListener('change', window.selectFile);
     }
 }
 

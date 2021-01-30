@@ -187,6 +187,14 @@ button {
     padding: 0.8rem 1rem;
     margin-bottom: 1rem;
     border-bottom: .1rem solid #ccc;
+    background-color: #fff;
+}
+
+file-filters {
+    left: 0;
+    top: 0;
+    position: sticky;
+    display: block;
 }
 
 .filters button {
@@ -334,6 +342,10 @@ h1.file-name {
 .file-actions li button:hover,
 .file-actions li label:hover {
     background-color: #f0f0f0;
+}
+
+.file-actions li button.warning {
+    color: red;
 }
 
 /* MODALS */

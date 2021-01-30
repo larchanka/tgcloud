@@ -67,7 +67,7 @@ const getOtlFile = async (req, res) => {
 
         console.log('[INFO]', new Date(), 'File was downloaded');
 
-        await OneTimeLink.findByIdAndDelete(decryptedOtl._id);
+        await OneTimeLink.findByIdAndDelete(decryptedOtl);
 
         console.log('[INFO]', new Date(), 'File OTL was deleted');
 

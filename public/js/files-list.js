@@ -61,7 +61,7 @@ class Filters extends HTMLElement {
             </div>
         `;
 
-        document.getElementById('select-all-files').addEventListener('click', window.selectAllFiles);
+        document.getElementById('select-all-files').addEventListener('change', window.selectAllFiles);
     }
   }
 
@@ -93,11 +93,24 @@ class FilesList extends HTMLElement {
     }
 
     selectAllFiles = (e) => {
+        e.preventDefault();
         const isChecked = e.target.checked;
-        document.querySelectorAll('.file-checkbox').forEach(el => {
-            console.log(el)
+        document.querySelectorAll('.file-checkbox-item').forEach(el => {
             el.checked = isChecked;
         });
+
+        if (document.querySelectorAll('.file-checkbox-item:checked').length < document.querySelectorAll('.file-checkbox').length - 1) {
+            document.getElementById('select-all-files').checked = false;
+        }
+    }
+
+    selectFile = (e) => {
+        e.preventDefault();
+        if (document.querySelectorAll('.file-checkbox-item:checked').length < document.querySelectorAll('.file-checkbox').length - 1) {
+            document.getElementById('select-all-files').checked = false;
+        } else {
+            document.getElementById('select-all-files').checked = true;
+        }
     }
 
     loadFiles(filter = this.filter) {

@@ -219,7 +219,7 @@
     ["audacity-icon", ["medium-yellow", "medium-yellow"], /\.aup$/i],
     ["audio-icon", ["medium-red", "medium-red"], /\.mp3$/i, , false, , , , /^\xFF\xFB|^ID3/],
     ["audio-icon", ["dark-yellow", "dark-yellow"], /\.wav$/i, , false, , , , /^RIFF(?!.+WEBP)/],
-    ["audio-icon", ["dark-cyan", "dark-cyan"], /\.(?:aac|ac3|m4p)$/i, , false, , , , /^\x0Bw/],
+    ["audio-icon", ["dark-cyan", "dark-cyan"], /\.(?:aac|ac3|m4p|m3u8)$/i, , false, , , , /^\x0Bw/],
     ["audio-icon", ["medium-purple", "medium-purple"], /\.aif[fc]?$/i, , false, , , , /^FORM.{4}AIFF/],
     ["audio-icon", ["medium-cyan", "medium-cyan"], /\.au$/i, , false, , , , /^\.snd|^dns\./],
     ["audio-icon", ["dark-red", "dark-red"], /\.flac$/i, , false, , , , /^fLaC/],
