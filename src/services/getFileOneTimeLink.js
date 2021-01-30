@@ -1,6 +1,6 @@
 const { Asset, OneTimeLink } = require('../db/models');
 const TelegramBot = require('../telegram');
-const { encryptString } = require('../utils/encryptDecryptString');
+// const { encryptString } = require('../utils/encryptDecryptString');
 
 const getFileOneTimeLink = async (req, res) => {
     const fileChecksum = req.params.checksum;
@@ -40,7 +40,7 @@ const getFileOneTimeLink = async (req, res) => {
 
         const dataInfo = await OneTimeLink.create(dataObj);
 
-        const otlHash = encryptString(JSON.stringify(dataInfo));
+        const otlHash = dataInfo._id;
 
         const bot = TelegramBot();
 

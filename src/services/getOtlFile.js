@@ -9,7 +9,7 @@ const getOtlFile = async (req, res) => {
     console.log('[INFO]', new Date(), 'One time link file download:', otlChecksum);
 
     try {
-        decryptedOtl = JSON.parse(decryptString(otlChecksum));
+        decryptedOtl = otlChecksum;
     } catch(e) {
         console.log('[WARNING]', new Date(), 'One time link file download - unauthorized token:', otlChecksum);
     }
@@ -21,9 +21,7 @@ const getOtlFile = async (req, res) => {
         });
     }
 
-    console.log(decryptedOtl._id)
-
-    const otl = await OneTimeLink.findById(decryptedOtl._id);
+    const otl = await OneTimeLink.findById(decryptedOtl);
     
     if (!otl) {
         console.log('[INFO]', new Date(), 'One time link file download not found:', otlChecksum);

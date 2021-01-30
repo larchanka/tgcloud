@@ -50,7 +50,7 @@ class FileInformation extends HTMLElement {
         fetch(url).then(resp => resp.json())
             .then(({ message }) => {
                 const el = document.getElementById('sharelink');
-                el.innerHTML = `<b>One time share link:</b> ${window.location.origin}/otl/${message}`;
+                el.innerHTML = `<b>One time share link:</b><br />${window.location.origin}/otl/${message}`;
                 el.style.display = 'block';
             })
             .catch(err => {
