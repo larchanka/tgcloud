@@ -13,6 +13,8 @@ console.log('[INFO]', new Date(), 'Starting application');
 
 const api = require('./services');
 const signin = require('./services/signin');
+const getOtlFile = require('./services/getOtlFile');
+const downloadFileOneTimeLink = require('./services/downloadFileOneTimeLink');
 const authentication = require('./middleware/authentication');
 
 const app = express();
@@ -67,6 +69,9 @@ app.get('/session', authentication, function (req, res) {
 const router = express.Router();
 
 app.post('/signin', signin);
+
+app.get('/otl/:otlChecksum/download', downloadFileOneTimeLink);
+app.use('/otl/:otlChecksum', getOtlFile);
 
 app.use('/api/v1', authentication, api(router));
 

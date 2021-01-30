@@ -42,6 +42,22 @@ class FileInformation extends HTMLElement {
         }
     }
 
+    getShareLink = (e, checksum) => {
+        e.preventDefault();
+        const fileId = this.getAttribute('fileid');
+        const url = `http://testbot.com/api/v1/file/${fileId}/${checksum}/otl`;
+
+        fetch(url).then(resp => resp.json())
+            .then(({ message }) => {
+                const el = document.getElementById('sharelink');
+                el.innerHTML = `<b>One time share link:</b> ${window.location.origin}/otl/${message}`;
+                el.style.display = 'block';
+            })
+            .catch(err => {
+                this.renderLogin();
+            });
+    }
+
     renderFile(fileData) {
         if (!fileData) {
             this.innerHTML = 'File not found'
@@ -70,8 +86,12 @@ class FileInformation extends HTMLElement {
                                 <label>
                                 <input type="checkbox" id="isPrivate" /> Is Private
                                 </label>
+                                </li>
+                                <li>
+                                <button id="share-${asssetData.assetHash}">Share</button>
                                 </li>` : ''}
                             </ul>
+                            <div id="sharelink" class="share-link"></div>
                         </div>
                         <div class="file-preview">
                             ${['mp4', 'mov', 'wmv'].indexOf(fileType) > -1
@@ -109,6 +129,14 @@ class FileInformation extends HTMLElement {
                                 });
                         }
                     });
+                });
+            }
+
+
+            const shareFileEl = document.getElementById(`share-${asssetData.assetHash}`);
+            if (shareFileEl) {
+                shareFileEl.addEventListener('click', (e) => {
+                    this.getShareLink(e, asssetData.assetHash);
                 });
             }
 

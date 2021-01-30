@@ -42,8 +42,10 @@ class Filters extends HTMLElement {
         ];
 
         this.innerHTML = `
-        
             <div class="filters">
+                <div>
+                    <input type="checkbox" class="file-checkbox" id="select-all-files" />
+                </div>
                 ${btns.map(btn => {
                     const filter = {sort: { [btn.field]: filters.sort[btn.field] ? filters.sort[btn.field] * -1 : 1 }};
                     return `
@@ -57,8 +59,9 @@ class Filters extends HTMLElement {
                 `;
                 }).join('')}
             </div>
-
         `;
+
+        document.getElementById('select-all-files').addEventListener('click', window.selectAllFiles);
     }
   }
 
@@ -80,10 +83,21 @@ class FilesList extends HTMLElement {
             this.loadFiles();
 
         window.loadFiles = this.loadFiles.bind(this);
+        window.selectAllFiles = this.selectAllFiles;
+        window.selectFile = this.selectFile;
+        this.selectedFiles = [];
     }
   
     disconnectedCallback() {
         
+    }
+
+    selectAllFiles = (e) => {
+        const isChecked = e.target.checked;
+        document.querySelectorAll('.file-checkbox').forEach(el => {
+            console.log(el)
+            el.checked = isChecked;
+        });
     }
 
     loadFiles(filter = this.filter) {

@@ -1,4 +1,3 @@
-const fileger = require('fileger');
 const fs = require('fs');
 const got = require('got');
 const { createDecipheriv } = require('crypto');
@@ -54,7 +53,7 @@ const getFile = (req, res) => {
             got.stream(url)
                 .pipe(createDecipheriv('aes-256-cbc', config.fileEncryptionSecret, config.fileEncryptionVector))
                 .pipe(res);
-        })
+        });
 
     });
 };

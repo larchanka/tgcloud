@@ -68,7 +68,7 @@ const uploadFile = (req, res) => {
                             tags: [],
                             categories: [],
                             createdBy: req.session.user.id,
-                            createdAT: creationDate,
+                            createdAt: creationDate,
                             updatedAt: creationDate,
                             originalName: uploadedFile.name.toLowerCase(),
                             originalSize: uploadedFile.size,

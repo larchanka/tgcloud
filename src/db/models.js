@@ -65,10 +65,21 @@ const assetSchema = new Schema({
 
 const Asset = mongoose.model('assets', assetSchema);
 
+// Asset One Time Links
+const otlSchema = new Schema({
+    fileId: String,
+    assetHash: String,
+    createdBy: Number,
+    createdAt: String,
+});
+
+const OneTimeLink = mongoose.model('onetimelink', otlSchema);
+
 module.exports = {
     User,
     UserRole,
     Category,
     Asset,
     Access,
+    OneTimeLink,
 };

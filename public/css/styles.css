@@ -1,9 +1,12 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: #eee;
+}
+
+body, input, button, select {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 100%;
-    background-color: #eee;
 }
 
 * {
@@ -298,6 +301,41 @@ h1.file-name {
     margin-bottom: 0.5rem;
 }
 
+.file-actions li {
+    display: block;
+}
+
+.share-link {
+    padding: .5rem;
+    margin-top: 2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 30rem;
+    line-break: anywhere;
+    background-color: #eee;
+    display: none;
+}
+
+.file-actions li a,
+.file-actions li button,
+.file-actions li label {
+    appearance: none;
+    display: inline-block;
+    padding: .5rem;
+    font-size: .1rem solid #eee;
+    border: 0;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+    background-color: #fff;
+    color: #00f;
+}
+
+.file-actions li a:hover,
+.file-actions li button:hover,
+.file-actions li label:hover {
+    background-color: #f0f0f0;
+}
+
 /* MODALS */
 
 .modal-container {
@@ -355,4 +393,23 @@ h1.file-name {
 
 .modal-btns button.btn-danger:hover {
     background-color: #b00;
+}
+
+/* OTL: one time links */
+
+.otl {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.otl a {
+    display: inline-block;
+    padding: 0.5rem;
+    border-bottom: .1rem solid #ddd;
+}
+
+.otl a:hover {
+    background-color: #fff;
 }

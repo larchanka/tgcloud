@@ -1,6 +1,7 @@
 const fileUpload = require('express-fileupload');
 
 const getFile = require('./getFile');
+const getFileOneTimeLink = require('./getFileOneTimeLink');
 const getFileInformation = require('./getFileInformation');
 const listFiles = require('./listFiles');
 const uploadFile = require('./uploadFile');
@@ -15,6 +16,7 @@ function initApi(router) {
     router.get('/files/:id', getFileInformation);
     router.get('/files/:id/privacy/:privacy', setFilePrivacy);
     router.get('/file/:id/:checksum', getFile);
+    router.get('/file/:id/:checksum/otl', getFileOneTimeLink);
     router.delete('/file/:id/:checksum', deleteFile);
 
     return router;
