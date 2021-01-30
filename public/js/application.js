@@ -75,6 +75,9 @@ class App extends HTMLElement {
                 .add(/upload/, () => {
                     this.innerHTML += `<file-upload userId="${this.userData.id}" isLoggedIn="${this.isLoggedIn}"></file-upload>`;
                 })
+                .add(/category\/(.*)/, (categoryId) => {
+                    this.innerHTML += `<files-list userId="${this.userData.id}" categoryid="${categoryId}" isLoggedIn="${this.isLoggedIn}"></files-list>`;
+                })
                 .add('', () => {
                     this.innerHTML += `<files-list userId="${this.userData.id}" isLoggedIn="${this.isLoggedIn}"></files-list>`;
                 });

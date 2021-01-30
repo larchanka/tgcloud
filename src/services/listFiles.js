@@ -3,13 +3,15 @@ const { Asset } = require('../db/models');
 const listFiles = (req, res) => {
     console.log('[INFO]', new Date(), 'Get files');
 
-    const { filter } = req.params;
+    const { filter, categoryId } = req.params;
     const findOptions = {
         $or: [
             { createdBy: req.session.user.id },
             { isPrivate: false },
         ]
     };
+
+    findOptions.categories = categoryId ? { $in : categoryId } : [];
     let filterOptions = { sort: { updatedAt: -1 } };
     
     if (filter) {

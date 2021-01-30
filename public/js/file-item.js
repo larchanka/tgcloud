@@ -27,6 +27,22 @@ class FileItem extends HTMLElement {
 
     }
 
+    onDragStart(event) {
+        event
+          .dataTransfer
+          .setData('text/plain', event.target.id);
+      
+        event
+          .currentTarget
+          .classList.add('is-dragged');
+    }
+
+    onDragStop(event) {
+        event
+          .currentTarget
+          .classList.remove('is-dragged');
+    }
+
     render() {
         const id = this.getAttribute('id');
         const iconClass = this.getAttribute('iconClass');
@@ -41,7 +57,7 @@ class FileItem extends HTMLElement {
         const isOwner = userId === createdBy
 
         this.innerHTML = `
-            <li id="file-${id}" class="file-item">
+            <li id="file-${id}" data-id="${id}" class="file-item draggable" draggable="true">
                 <input type="checkbox" id="file-checkbox-${id}" data-file-id="${id}" class="file-checkbox file-checkbox-item" />
                 &nbsp;
                 <span class="file-icon-span ${iconClass}"></span>
@@ -96,6 +112,9 @@ class FileItem extends HTMLElement {
                 items: menuItems,
             });
         });
+
+        document.getElementById(`file-${id}`).addEventListener('dragstart', this.onDragStart);
+        document.getElementById(`file-${id}`).addEventListener('dragend', this.onDragStop);
 
         document.getElementById(`file-checkbox-${id}`).addEventListener('change', window.selectFile);
     }

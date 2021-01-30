@@ -35,6 +35,7 @@ const categorySchema = new Schema({
     categoryTitle: String,
     categoryDescription: String,
     parentCategoryId: String,
+    createdBy: Number,
 });
 
 const Category = mongoose.model('category', categorySchema);
@@ -42,7 +43,7 @@ const Category = mongoose.model('category', categorySchema);
 // Asset
 const assetSchema = new Schema({
     tags: Array,
-    categories: Array,
+    categories: [String],
     createdBy: Number,
     createdAt: Date,
     updatedAt: Date,

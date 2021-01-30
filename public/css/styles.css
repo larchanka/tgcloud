@@ -49,7 +49,7 @@ button {
 
 .container {
     width: 90%;
-    max-width: 60rem;
+    max-width: 70rem;
     margin: 0 auto;
 }
 
@@ -79,7 +79,7 @@ button {
 
 .header {
     width: 90%;
-    max-width: 60rem;
+    max-width: 70rem;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -152,10 +152,11 @@ button {
 
 .file-item {
     background-color: #fff;
-    padding: 0.8rem 1rem;
-    border-bottom: 0.1rem solid #ddd;
+    padding: .8rem 1rem .8rem .4rem;
+    border-bottom: .1rem solid #ddd;
     display: flex;
     align-content: space-between;
+    border-left: .6rem solid #fff;
 }
 
 .file-item > a {
@@ -180,6 +181,7 @@ button {
 
 .file-item:hover {
     background-color: #efefef;
+    border-left-color: #ddd;
 }
 
 .filters {
@@ -241,6 +243,46 @@ file-filters {
 
 .arrow-down button, .arrow-up button {
     font-weight: 700;
+}
+
+.aside-container {
+    display: flex;
+}
+
+.aside {
+    width: 20%;
+}
+
+.aside-content {
+    width: 80%;
+}
+
+.categories {
+    padding-right: 1rem;
+}
+
+.categories li a {
+    display: block;
+    padding: 0.5rem;
+    border-bottom: .1rem solid #eee;
+}
+
+.categories li a.active {
+    font-weight: 700;
+}
+
+.categories li a:hover {
+    background-color: #eee;
+}
+
+.draggable.is-dragged {
+    background-color: yellow;
+    border-left-color: orange;
+}
+
+.droppable.droppable-over {
+    background-color: #999;
+    color: #fff;
 }
 
 /* UPLOAD */
