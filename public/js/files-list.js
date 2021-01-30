@@ -3,6 +3,7 @@ class FilesList extends HTMLElement {
       super();
 
       this.filter = { sort: { updatedAt: -1 } };
+      this.categories = [];
     }
   
     connectedCallback() {
@@ -107,6 +108,14 @@ class FilesList extends HTMLElement {
             this.innerHTML = '<center>Files not found</center>'
         } else {
             const userId = Number(this.getAttribute('userid'));
+
+            if (this.categoryId) {
+                const activeCategory = this.categories.find(c => c._id === this.categoryId);
+                window.document.title = `TgCloud: ${activeCategory.categoryTitle}`;
+            } else {
+                window.document.title = `TgCloud`;
+            }
+
             this.innerHTML = `
                 <div class="container">
                     <div class="aside-container">

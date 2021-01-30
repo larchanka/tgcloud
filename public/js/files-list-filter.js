@@ -60,7 +60,11 @@ class Filters extends HTMLElement {
             </div>
         `;
 
-        document.getElementById('select-all-files').addEventListener('change', window.selectAllFiles);
+        const checkboxEl = document.getElementById('select-all-files');
+
+        if (checkboxEl) {
+            checkboxEl.addEventListener('change', window.selectAllFiles);
+        }
     }
   }
 

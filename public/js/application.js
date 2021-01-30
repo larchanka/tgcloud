@@ -27,9 +27,20 @@ class App extends HTMLElement {
                 }
             });
 
-            window.onhashchange = this.checkRoute;
+        window.onhashchange = this.checkRoute;
 
-            window.renderLogin = this.renderLogin.bind(this);
+        window.renderLogin = this.renderLogin.bind(this);
+
+        window.document.addEventListener('click', (e) => {
+            if (e.target.nodeName === 'A') {
+                const href = e.target.href;
+
+                if (href.indexOf(window.location.origin + '/') === 0 && !e.target.download) {
+                    e.preventDefault();
+                    window.history.pushState({}, '', href);
+                }
+            }
+        }, false);
     }
   
     disconnectedCallback() {
@@ -70,13 +81,13 @@ class App extends HTMLElement {
             
             router
                 .add(/file\/(.*)/, (file) => {
-                    this.innerHTML += `<file-information userId="${this.userData.id}" isLoggedIn="${this.isLoggedIn}" fileId="${file}"></file-information>`;
+                    this.innerHTML = `<file-information userId="${this.userData.id}" isLoggedIn="${this.isLoggedIn}" fileId="${file}"></file-information>`;
                 })
                 .add(/category\/(.*)/, (categoryId) => {
-                    this.innerHTML += `<files-list userId="${this.userData.id}" categoryid="${categoryId}" isLoggedIn="${this.isLoggedIn}"></files-list>`;
+                    this.innerHTML = `<files-list userId="${this.userData.id}" categoryid="${categoryId}" isLoggedIn="${this.isLoggedIn}"></files-list>`;
                 })
                 .add('', () => {
-                    this.innerHTML += `<files-list userId="${this.userData.id}" isLoggedIn="${this.isLoggedIn}"></files-list>`;
+                    this.innerHTML = `<files-list userId="${this.userData.id}" isLoggedIn="${this.isLoggedIn}"></files-list>`;
                 });
         }
     }

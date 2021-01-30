@@ -14,7 +14,7 @@ class Loader extends HTMLElement {
     render() {
         const text = this.getAttribute('text') || 'Loading...';
 
-        this.innerHTML = `<progress style="width:100%; position: fixed; bottom: 0; left: 0;">${text}</progress>`;
+        this.innerHTML = `<div class="progress" style="width:100%; position: fixed; bottom: 0; left: 0;">${text}</div>`;
     }
   }
 
