@@ -56,7 +56,7 @@ class FilesListCategories extends HTMLElement {
     renderCategories(categories = []) {
         if (this.categoryId) {
             const activeCategory = categories.find(c => c._id === this.categoryId);
-            window.document.title = `TgCloud: ${activeCategory.categoryTitle}`;
+            window.document.title = `TgCloud: ${activeCategory.categoryTitle} ${activeCategory.isPrivate ? '' : '[shared]'}`;
         } else {
             window.document.title = `TgCloud`;
         }
@@ -64,8 +64,8 @@ class FilesListCategories extends HTMLElement {
         this.innerHTML = `
             <ul class="categories">
                 <li>
-                    <a href="/" class="droppable${!this.categoryId ? ' active' : ''}">
-                        No Category
+                    <a href="/" class="droppable${!this.categoryId ? ' active' : ''} no-icon">
+                        Unsorted
                     </a>
                 </li>
                 ${categories.map(c => (

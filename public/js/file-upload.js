@@ -48,7 +48,6 @@ class FilesUpload extends HTMLElement {
             xhr.addEventListener('readystatechange', (e) => {
               if (xhr.readyState == 4 && xhr.status == 200) {
                   this.totalFiles += 1;
-                  console.log(this.totalFiles, this.filesToUpload)
 
                   if (this.totalFiles >= this.filesToUpload) {
                     $("#status").empty().text('Uploaded');
@@ -67,7 +66,7 @@ class FilesUpload extends HTMLElement {
             formData.append('selectedFile', file);
             formData.append('isEncrypted', isEncrypted);
             formData.append('isPrivate', isPrivate);
-            formData.append('categoryId', categoryId);
+            formData.append('categoryId', categoryId || '');
             xhr.send(formData)
         }
 

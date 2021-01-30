@@ -36,12 +36,11 @@ class FilesList extends HTMLElement {
                         </div>
                     </div>
                     <div class="aside-content">
-                        <file-filters filters="${JSON.stringify(this.filter).replace(/"/g, '~')}"></file-filters>
                         <files-list-items userid="${userId}" categoryid="${this.categoryId || ''}"></files-list-items>
                     </div>
                     <div class="aside-actions">
                         <h4>Upload Files</h4>
-                        <file-upload userid="${userId}" categoryid="${this.categoryId}" isloggedin="true"></file-upload>
+                        <file-upload userid="${userId}" categoryid="${this.categoryId || ''}" isloggedin="true"></file-upload>
                     </div>
                 </div>
             </div>

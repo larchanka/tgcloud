@@ -1,9 +1,10 @@
 const { Asset } = require('../db/models');
+const TelegramBot = require('../telegram');
 
 const getFileInformation = (req, res) => {
     console.log('[INFO]', new Date(), 'Get files');
 
-    Asset.findById(req.params.id).populate('categories').exec((err, data) => {
+    Asset.findById(req.params.id).populate('categories').exec(async (err, data) => {
         if (err) {
             console.log('[ERROR]', new Date(), 'DB error while file search. Id ' + req.params.id);
 
@@ -26,9 +27,13 @@ const getFileInformation = (req, res) => {
             });
         }
 
+        const bot = TelegramBot();
+
+        const user = await bot.getChatMember(data.createdBy, data.createdBy);
+
         console.log('[INFO]', new Date(), 'File with id ' + req.params.id + ' found');
 
-        return res.send(data);
+        return res.send({...data._doc, telegramUser: user});
     });
 };
 

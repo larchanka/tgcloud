@@ -95,6 +95,18 @@ class FileInformation extends HTMLElement {
                                 <br />
                                 ${formatDate(assetData.createdAt)}</div>
                             <br />
+                            <div class="file-extention">
+                                <span class="faded">Extention</span>
+                                <br />
+                                ${fileType}</div>
+                            <br />
+                            <div class="file-uploadedby">
+                                <span class="faded">Uploaded by</span>
+                                <br />
+                                <a href="https://t.me/${fileData.telegramUser.user.username}" target="contact-user">
+                                    @${fileData.telegramUser.user.username}
+                                </a></div>
+                            <br />
                             <br />
                             <ul class="file-actions">
                                 <li>
@@ -117,41 +129,48 @@ class FileInformation extends HTMLElement {
                             <div id="sharelink" class="share-link"></div>
                         </div>
                         <div class="file-preview">
-                            ${formats.video.indexOf(fileType) > -1
-                                ? `<video controls src="/api/v1/file/${fileData._id}/${assetData.assetHash}"></video>`
-                                : ''}
+                            <div class="file-preview-content">
+                                <div class="file-preview-content-name">
+                                    ${assetData.assetName}
+                                </div>
+                                <div class="file-preview-view">
+                                    ${formats.video.indexOf(fileType) > -1
+                                        ? `<video controls src="/api/v1/file/${fileData._id}/${assetData.assetHash}"></video>`
+                                        : ''}
 
-                            ${formats.image.indexOf(fileType) > -1
-                                ? `<img src="/api/v1/file/${fileData._id}/${assetData.assetHash}" alt="${assetData.assetName}">`
-                                : ''}
+                                    ${formats.image.indexOf(fileType) > -1
+                                        ? `<img src="/api/v1/file/${fileData._id}/${assetData.assetHash}" alt="${assetData.assetName}">`
+                                        : ''}
 
-                            ${formats.pdf.indexOf(fileType) > -1
-                                ? `<div id="pdf-preview"></div>`
-                                : ''}
+                                    ${formats.pdf.indexOf(fileType) > -1
+                                        ? `<div id="pdf-preview"></div>`
+                                        : ''}
 
-                            ${formats.audio.indexOf(fileType) > -1
-                                ? `<audio controls src="/api/v1/file/${fileData._id}/${assetData.assetHash}"></audio>`
-                                : ''}
+                                    ${formats.audio.indexOf(fileType) > -1
+                                        ? `<audio controls src="/api/v1/file/${fileData._id}/${assetData.assetHash}"></audio>`
+                                        : ''}
 
-                            ${Object.keys(formats).map(k => formats[k]).flat().indexOf(fileType) === -1
-                                ? `
-                                    <div class="unknown-file-preview">
-                                        <div>
-                                            <span class="${iconClass} lg-font icon-u"></span>
-                                        </div>
-                                        <div>
-                                            <strong>.${fileType}</strong> file preview is not supported
-                                        </div>
-                                        <div>
-                                            <small>
-                                                ${assetData.assetName}
-                                                ·
-                                                ${formatSizeUnits(assetData.assetSize)}
-                                            </small>
-                                        </div>
-                                    </div>
-                                `
-                                : ''}
+                                    ${Object.keys(formats).map(k => formats[k]).flat().indexOf(fileType) === -1
+                                        ? `
+                                            <div class="unknown-file-preview">
+                                                <div>
+                                                    <span class="${iconClass} lg-font icon-u"></span>
+                                                </div>
+                                                <div>
+                                                    <strong>.${fileType}</strong> file preview is not supported
+                                                </div>
+                                                <div>
+                                                    <small>
+                                                        ${assetData.assetName}
+                                                        ·
+                                                        ${formatSizeUnits(assetData.assetSize)}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        `
+                                        : ''}
+                                </div>
+                            </div>
                         </div>
                 </div>
             `;

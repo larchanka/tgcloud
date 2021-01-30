@@ -59,8 +59,17 @@ class FilesListItems extends HTMLElement {
 
     renderFiles(files = []) {
         const userId = Number(this.getAttribute('userid'));
+        let isPrivateCategory = true;
+
+        if (files.length) {
+            if (files[0].categories.length && !files[0].categories[0].isPrivate) {
+                isPrivateCategory = false;
+            }
+        }
 
         this.innerHTML = `
+            ${isPrivateCategory ? '' : '<div class="warning">This category is <strong>shared</strong></div>'}
+            <file-filters filters="${JSON.stringify(this.filter).replace(/"/g, '~')}"></file-filters>
             <ul class="file-list">
                 ${files.length ? files.map(file => {
                     const fileData = file.vc.pop();

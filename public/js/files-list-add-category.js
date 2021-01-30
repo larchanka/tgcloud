@@ -46,7 +46,7 @@ class FilesListAddCategory extends HTMLElement {
             <form id="add-category-form">
                 <h4>Create Category</h4>
                 <div class="add-category-form">
-                    <input type="text" required value="${this.categoryTitle}" id="add-category-form-title" />
+                    <input type="text" placeholder="Enter category title" required value="${this.categoryTitle}" id="add-category-form-title" />
                     <button>+</button>
                 </div>
             </form>

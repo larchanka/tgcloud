@@ -10,7 +10,7 @@ const listCategories = (req, res) => {
             { isPrivate: false },
         ]
     };
-    let filterOptions = { sort: { updatedAt: -1 } };
+    let filterOptions = { sort: { categoryTitle: 1 } };
 
     if (filter) {
         console.log('[INFO]', new Date(), 'Filter set:', filter);
