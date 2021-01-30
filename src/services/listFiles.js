@@ -19,7 +19,7 @@ const listFiles = (req, res) => {
         filterOptions = JSON.parse(filter.replace(/~/g, '"'));
     }
 
-    Asset.find(findOptions, null, filterOptions, (_err, data) => {
+    Asset.find(findOptions, null, filterOptions).populate('categories').exec((_err, data) => {
         // TODO: error handler
         console.log('[INFO]', new Date(), 'Total files found:', data.length);
 

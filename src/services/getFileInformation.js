@@ -3,7 +3,7 @@ const { Asset } = require('../db/models');
 const getFileInformation = (req, res) => {
     console.log('[INFO]', new Date(), 'Get files');
 
-    Asset.findById(req.params.id, (err, data) => {
+    Asset.findById(req.params.id).populate('categories').exec((err, data) => {
         if (err) {
             console.log('[ERROR]', new Date(), 'DB error while file search. Id ' + req.params.id);
 

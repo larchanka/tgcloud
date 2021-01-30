@@ -43,7 +43,7 @@ const Category = mongoose.model('category', categorySchema);
 // Asset
 const assetSchema = new Schema({
     tags: Array,
-    categories: [String],
+    categories: [{ type: Schema.Types.ObjectId, ref: 'category' }],
     createdBy: Number,
     createdAt: Date,
     updatedAt: Date,

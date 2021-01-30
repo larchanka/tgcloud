@@ -6,7 +6,7 @@ const listCategories = (req, res) => {
     const { filter } = req.params;
     const findOptions = { createdBy: req.session.user.id };
     let filterOptions = { sort: { updatedAt: -1 } };
-    console.log(findOptions)
+
     if (filter) {
         console.log('[INFO]', new Date(), 'Filter set:', filter);
         filterOptions = JSON.parse(filter.replace(/~/g, '"'));

@@ -104,72 +104,68 @@ class FilesList extends HTMLElement {
     }
 
     renderFiles(files = []) {
-        if (!files.length) {
-            this.innerHTML = '<center>Files not found</center>'
+        const userId = Number(this.getAttribute('userid'));
+
+        if (this.categoryId) {
+            const activeCategory = this.categories.find(c => c._id === this.categoryId);
+            window.document.title = `TgCloud: ${activeCategory.categoryTitle}`;
         } else {
-            const userId = Number(this.getAttribute('userid'));
+            window.document.title = `TgCloud`;
+        }
 
-            if (this.categoryId) {
-                const activeCategory = this.categories.find(c => c._id === this.categoryId);
-                window.document.title = `TgCloud: ${activeCategory.categoryTitle}`;
-            } else {
-                window.document.title = `TgCloud`;
-            }
-
-            this.innerHTML = `
-                <div class="container">
-                    <div class="aside-container">
-                        <div class="aside">
-                            <h3>Categories</h3>
-                            <ul class="categories">
-                                <li><a href="/" class="droppable${!this.categoryId ? ' active' : ''}">No Category</a></li>
-                                ${this.categories.map(c => (
-                                    `<li>
-                                    <a href="/category/${c._id}" id="category-${c._id}" data-categoryid="${c._id}" class="droppable${c._id === this.categoryId ? ' active' : ''}">${c.categoryTitle}</a>
-                                    </li>`
-                                ))}
-                            </ul>
-                            <h4>Upload Files</h4>
-                            <file-upload userid="${userId}" categoryid="${this.categoryId}" isloggedin="true"></file-upload>
-                        </div>
-                        <div class="aside-content">
-                            <file-filters filters="${JSON.stringify(this.filter).replace(/"/g, '~')}"></file-filters>
-                            <ul class="file-list">
-                                ${files.map(file => {
-                                    const fileData = file.vc.pop();
-                                    const iconClass = window.FileIcons.getClassWithColor(fileData.assetName);
-                                    return `
-                                        <file-item
-                                            id="${file._id}"
-                                            iconClass="${iconClass}"
-                                            userId="${userId}"
-                                            createdBy="${file.createdBy}"
-                                            fileName="${fileData.assetName}"
-                                            createdAt="${fileData.createdAt}"
-                                            fileSize="${fileData.assetSize}"
-                                            fileChecksum="${fileData.assetHash}"
-                                            isPrivate="${file.isPrivate}"
-                                        ></file-item>
-                                    `;
-                                }).join('')}
-                            </ul>
-                        </div>
+        this.innerHTML = `
+            <div class="container">
+                <div class="aside-container">
+                    <div class="aside">
+                        <h3>Categories</h3>
+                        <ul class="categories">
+                            <li><a href="/" class="droppable${!this.categoryId ? ' active' : ''}">No Category</a></li>
+                            ${this.categories.map(c => (
+                                `<li>
+                                <a href="/category/${c._id}" id="category-${c._id}" data-categoryid="${c._id}" class="droppable${c._id === this.categoryId ? ' active' : ''}">${c.categoryTitle}</a>
+                                </li>`
+                            ))}
+                        </ul>
+                        <h4>Upload Files</h4>
+                        <file-upload userid="${userId}" categoryid="${this.categoryId}" isloggedin="true"></file-upload>
+                    </div>
+                    <div class="aside-content">
+                        <file-filters filters="${JSON.stringify(this.filter).replace(/"/g, '~')}"></file-filters>
+                        <ul class="file-list">
+                            ${files.length ? files.map(file => {
+                                const fileData = file.vc.pop();
+                                const iconClass = window.FileIcons.getClassWithColor(fileData.assetName);
+                                return `
+                                    <file-item
+                                        id="${file._id}"
+                                        iconClass="${iconClass}"
+                                        userId="${userId}"
+                                        createdBy="${file.createdBy}"
+                                        fileName="${fileData.assetName}"
+                                        createdAt="${fileData.createdAt}"
+                                        fileSize="${fileData.assetSize}"
+                                        fileChecksum="${fileData.assetHash}"
+                                        isPrivate="${file.isPrivate}"
+                                    ></file-item>
+                                `;
+                            }).join('') : '<h3>Files not found</h3>'}
+                        </ul>
                     </div>
                 </div>
-            `;
+            </div>
+        `;
 
-            document.querySelectorAll('.droppable').forEach(el => {
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                    el.addEventListener(eventName, (e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                    }, true);
-                })
-                el.addEventListener('dragover', this.onDragOver);
-                el.addEventListener('dragleave', this.onDragLeave);
-                el.addEventListener('drop', this.onDrop);
+        document.querySelectorAll('.droppable').forEach(el => {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                el.addEventListener(eventName, (e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                }, true);
             })
-        }
+            el.addEventListener('dragover', this.onDragOver);
+            el.addEventListener('dragleave', this.onDragLeave);
+            el.addEventListener('drop', this.onDrop);
+        })
     }
   }
 
