@@ -182,7 +182,7 @@ class FilesList extends HTMLElement {
                         <div class="aside">
                             <h3>Categories</h3>
                             <ul class="categories">
-                                <li><a href="/" class="droppable${!this.categoryId ? ' active' : ''}">All Files</a></li>
+                                <li><a href="/" class="droppable${!this.categoryId ? ' active' : ''}">No Category</a></li>
                                 ${this.categories.map(c => (
                                     `<li>
                                     <a href="/category/${c._id}" id="category-${c._id}" data-categoryid="${c._id}" class="droppable${c._id === this.categoryId ? ' active' : ''}">${c.categoryTitle}</a>
