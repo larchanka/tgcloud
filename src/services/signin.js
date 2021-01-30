@@ -1,5 +1,3 @@
-const { sign } = require("crypto");
-
 const signin = (req, res) => {
     const user = req.body;
 

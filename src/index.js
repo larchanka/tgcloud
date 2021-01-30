@@ -71,7 +71,7 @@ const router = express.Router();
 app.post('/signin', signin);
 
 app.get('/otl/:otlChecksum/download', downloadFileOneTimeLink);
-app.use('/otl/:otlChecksum', getOtlFile);
+app.get('/otl/:otlChecksum', getOtlFile);
 
 app.use('/api/v1', authentication, api(router));
 

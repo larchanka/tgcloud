@@ -20,6 +20,13 @@ h1, h2, h3, h4, h5, h6 {
     box-sizing: border-box;
 }
 
+.sticky {
+    display: block;
+    position: sticky;
+    left: 0;
+    top: 0;
+}
+
 .progress {
     display: block;
     background-color: #f3f3f3;
@@ -281,9 +288,8 @@ file-filters {
 
 files-list-categories {
     display: block;
-    position: sticky;
-    left: 0;
-    top: 2rem;
+    background-color: #f5f5f5;
+    margin-bottom: 2rem;
 }
 
 .categories li {
@@ -317,6 +323,33 @@ files-list-categories {
 }
 
 .droppable.droppable-over {
+    background-color: #fff;
+}
+
+.add-category-form {
+    display: flex;
+}
+
+.add-category-form input {
+    appearance: none;
+    display: block;
+    flex: 1;
+    width: calc(100% - 2rem);
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    line-height: 1.6rem;
+}
+
+.add-category-form button {
+    appearance: none;
+    display: block;
+    width: 2rem;
+    line-height: 1.6rem;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    border-radius: 0;
     background-color: #999;
     color: #fff;
 }

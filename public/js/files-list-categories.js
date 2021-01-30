@@ -40,7 +40,7 @@ class FilesListCategories extends HTMLElement {
             });
     }
 
-    loadCategories() {
+    loadCategories = () => {
         return fetch(`/api/v1/categories`)
             .then(res => res.json())
             .then((res) => {
@@ -74,7 +74,7 @@ class FilesListCategories extends HTMLElement {
                             ${c.categoryTitle}
                         </a>
                     </li>`
-                ))}
+                )).join('')}
             </ul>
         `;
 

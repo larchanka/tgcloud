@@ -9,12 +9,14 @@ const deleteFile = require('./deleteFile');
 const setFilePrivacy = require('./setFilePrivacy');
 const setFileCategory = require('./setFileCategory');
 const listCategories = require('./listCategories');
+const addCategory = require('./addCategory');
 
 function initApi(router) {
     console.log('[INFO]', new Date(), 'Initiate API');
 
     router.post('/upload', fileUpload(), uploadFile);
     router.get(['/files/filter/:filter/category/:categoryId', '/files/filter/:filter'], listFiles);
+    router.post('/categories/add', addCategory);
     router.get('/categories(/filter/:filter)?', listCategories);
     router.get('/files/:id', getFileInformation);
     router.get('/files/:id/privacy/:privacy', setFilePrivacy);

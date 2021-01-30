@@ -26,32 +26,6 @@ class FilesList extends HTMLElement {
         
     }
 
-    onDragOver(e) {
-        e.currentTarget.classList.add('droppable-over');
-        e.dataTransfer.dropEffect = 'copy';
-    }
-
-    onDragLeave(e) {
-        e.currentTarget.classList.remove('droppable-over');
-    }
-
-    onDrop = (e) => {
-        e.currentTarget.classList.remove('droppable-over');
-        const draggableEl = document.getElementById(e
-            .dataTransfer
-            .getData('text'));
-        const fileId = draggableEl.getAttribute('data-id');
-        const categoryId = e.currentTarget.getAttribute('data-categoryid');
-        fetch(`/api/v1/files/${fileId}/category/${categoryId ? categoryId : 'NaN'}`)
-            .then(() => {
-                draggableEl.remove();
-            })
-            .catch(e => {
-                console.log(e);
-                alert('Cannot change file\'s category!');
-            });
-    }
-
     selectAllFiles = (e) => {
         e.preventDefault();
         const isChecked = e.target.checked;
@@ -117,9 +91,12 @@ class FilesList extends HTMLElement {
             <div class="container">
                 <div class="aside-container">
                     <div class="aside">
-                        <layout-header></layout-header>
-                        <h3>Categories</h3>
-                        <files-list-categories categoryid="${this.categoryId || ''}" userid="${userId}"></files-list-categories>
+                        <div class="sticky">
+                            <layout-header></layout-header>
+                            <h3>Categories</h3>
+                            <files-list-categories categoryid="${this.categoryId || ''}" userid="${userId}"></files-list-categories>
+                            <files-list-add-category></files-list-add-category>
+                        </div>
                     </div>
                     <div class="aside-content">
                         <file-filters filters="${JSON.stringify(this.filter).replace(/"/g, '~')}"></file-filters>
@@ -150,18 +127,6 @@ class FilesList extends HTMLElement {
                 </div>
             </div>
         `;
-
-        document.querySelectorAll('.droppable').forEach(el => {
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                el.addEventListener(eventName, (e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                }, true);
-            })
-            el.addEventListener('dragover', this.onDragOver);
-            el.addEventListener('dragleave', this.onDragLeave);
-            el.addEventListener('drop', this.onDrop);
-        })
     }
   }
 
