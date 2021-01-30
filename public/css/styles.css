@@ -9,6 +9,13 @@ body, input, button, select {
     font-size: 100%;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    margin-bottom: 1rem;
+    color: #333;
+    font-weight: 400;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -58,8 +65,7 @@ button {
 }
 
 .container {
-    width: 90%;
-    max-width: 70rem;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -79,18 +85,11 @@ button {
 
 /* HEADER */
 
-.header-container {
-    background-color: #eee;
-    padding: 0 2rem;
-    line-height: 4rem;
-    margin-bottom: 4rem;
-    box-shadow: 0 .1rem .4rem #aaa;
-}
-
 .header {
-    width: 90%;
-    max-width: 70rem;
+    width: 100%;
     margin: 0 auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -257,29 +256,59 @@ file-filters {
 
 .aside-container {
     display: flex;
+    min-height: calc(100vh - 4rem);
 }
 
 .aside {
-    width: 20%;
-    padding-right: 1rem;
+    width: 15%;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    background-color: #f5f5f5;
 }
 
 .aside-content {
-    width: 80%;
+    width: 65%;
+    padding-left: 2rem;
+    padding-top: 2rem;
+}
+
+.aside-actions {
+    width: 20%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 2rem;
+}
+
+files-list-categories {
+    display: block;
+    position: sticky;
+    left: 0;
+    top: 2rem;
+}
+
+.categories li {
+    position: relative;
 }
 
 .categories li a {
     display: block;
     padding: 0.5rem;
-    border-bottom: .1rem solid #eee;
+    color: #666;
+    font-weight: 300;
+    padding-left: 1.4rem;
+    background-image: url(../img/folder.svg);
+    background-size: auto 1rem;
+    background-repeat: no-repeat;
+    background-position: left center;
 }
 
 .categories li a.active {
     font-weight: 700;
+    color: #000;
 }
 
 .categories li a:hover {
-    background-color: #eee;
+    color: #000;
 }
 
 .draggable.is-dragged {
@@ -300,7 +329,7 @@ file-filters {
 
 #drop-area {
     border: .1rem dashed #ccc;
-    border-radius: .5rem;
+    border-radius: .1rem;
     width: 100%;
     font-family: sans-serif;
     margin: 0 auto;

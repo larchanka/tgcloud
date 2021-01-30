@@ -34,7 +34,8 @@ const Access = mongoose.model('access', accessSchema);
 const categorySchema = new Schema({
     categoryTitle: String,
     categoryDescription: String,
-    parentCategoryId: String,
+    isPrivate: Boolean,
+    parentCategory: { type: Schema.Types.ObjectId, ref: 'category' },
     createdBy: Number,
 });
 

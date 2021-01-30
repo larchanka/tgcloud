@@ -4,7 +4,12 @@ const listCategories = (req, res) => {
     console.log('[INFO]', new Date(), 'Get categories');
 
     const { filter } = req.params;
-    const findOptions = { createdBy: req.session.user.id };
+    const findOptions = {
+        $or: [
+            { createdBy: req.session.user.id },
+            { isPrivate: false },
+        ]
+    };
     let filterOptions = { sort: { updatedAt: -1 } };
 
     if (filter) {

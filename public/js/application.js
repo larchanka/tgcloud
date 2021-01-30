@@ -67,7 +67,7 @@ class App extends HTMLElement {
     checkRoute() {
         this.route = document.location.pathname;
 
-        document.getElementById('root').innerHTML = `<layout-header></layout-header><application-root route="${this.route}"></application-root>`;
+        document.getElementById('root').innerHTML = `<application-root route="${this.route}"></application-root>`;
     }
 
     renderRoutes() {

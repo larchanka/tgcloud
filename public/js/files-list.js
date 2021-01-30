@@ -117,17 +117,9 @@ class FilesList extends HTMLElement {
             <div class="container">
                 <div class="aside-container">
                     <div class="aside">
+                        <layout-header></layout-header>
                         <h3>Categories</h3>
-                        <ul class="categories">
-                            <li><a href="/" class="droppable${!this.categoryId ? ' active' : ''}">No Category</a></li>
-                            ${this.categories.map(c => (
-                                `<li>
-                                <a href="/category/${c._id}" id="category-${c._id}" data-categoryid="${c._id}" class="droppable${c._id === this.categoryId ? ' active' : ''}">${c.categoryTitle}</a>
-                                </li>`
-                            ))}
-                        </ul>
-                        <h4>Upload Files</h4>
-                        <file-upload userid="${userId}" categoryid="${this.categoryId}" isloggedin="true"></file-upload>
+                        <files-list-categories categoryid="${this.categoryId || ''}" userid="${userId}"></files-list-categories>
                     </div>
                     <div class="aside-content">
                         <file-filters filters="${JSON.stringify(this.filter).replace(/"/g, '~')}"></file-filters>
@@ -150,6 +142,10 @@ class FilesList extends HTMLElement {
                                 `;
                             }).join('') : '<h3>Files not found</h3>'}
                         </ul>
+                    </div>
+                    <div class="aside-actions">
+                        <h4>Upload Files</h4>
+                        <file-upload userid="${userId}" categoryid="${this.categoryId}" isloggedin="true"></file-upload>
                     </div>
                 </div>
             </div>
