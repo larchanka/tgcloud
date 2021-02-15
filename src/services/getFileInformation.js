@@ -3,8 +3,14 @@ const TelegramBot = require('../telegram');
 
 const getFileInformation = (req, res) => {
     console.log('[INFO]', new Date(), 'Get files');
+    const findOptions = {
+        $or: [
+            { createdBy: req.session.user.id },
+            { isPrivate: false },
+        ]
+    };
 
-    Asset.findById(req.params.id).populate('categories').exec(async (err, data) => {
+    Asset.findById(req.params.id, undefined, findOptions).populate('categories').exec(async (err, data) => {
         if (err) {
             console.log('[ERROR]', new Date(), 'DB error while file search. Id ' + req.params.id);
 

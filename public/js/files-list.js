@@ -39,12 +39,19 @@ class FilesList extends HTMLElement {
                         <files-list-items userid="${userId}" categoryid="${this.categoryId || ''}"></files-list-items>
                     </div>
                     <div class="aside-actions">
+                        <user-header></user-header>
                         <h4>Upload Files</h4>
                         <file-upload userid="${userId}" categoryid="${this.categoryId || ''}" isloggedin="true"></file-upload>
                     </div>
                 </div>
             </div>
         `;
+
+        const userHeader = document.querySelector('user-header');
+
+        if (userHeader) {
+            userHeader.setAttribute('userdata', JSON.stringify(window.TGCLOUD_userData));
+        }
     }
   }
 

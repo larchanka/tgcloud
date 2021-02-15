@@ -77,6 +77,18 @@ const otlSchema = new Schema({
 
 const OneTimeLink = mongoose.model('onetimelink', otlSchema);
 
+// Asset Comments
+const commentsSchema = new Schema({
+    parentId: { type: Schema.Types.ObjectId, ref: 'comment' },
+    fileId: String,
+    assetHash: String,
+    createdBy: Number,
+    createdAt: String,
+    message: String,
+});
+
+const Comment = mongoose.model('comment', commentsSchema);
+
 module.exports = {
     User,
     UserRole,
@@ -84,4 +96,5 @@ module.exports = {
     Asset,
     Access,
     OneTimeLink,
+    Comment,
 };

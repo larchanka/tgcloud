@@ -9,18 +9,18 @@ const TelegramBot = require('../telegram');
 const getFile = (req, res) => {
     const fileChecksum = req.params.checksum;
     const fileId = req.params.id;
+    const findOptions = {
+        $or: [
+            { createdBy: req.session.user.id },
+            { isPrivate: false },
+        ]
+    };
 
     console.log('[INFO]', new Date(), 'Get file with checksum:', fileChecksum);
 
     const filePath = config.fileTmpStorage + fileChecksum;
 
-    if (fs.existsSync(filePath)) {
-        return fs.createReadStream(filePath)
-            .pipe(createDecipheriv('aes-256-cbc', config.fileEncryptionSecret, config.fileEncryptionVector))
-            .pipe(res);
-    }
-
-    return Asset.findById(fileId, (err, data) => {
+    return Asset.findById(fileId, undefined, findOptions, (err, data) => {
         if (err || !data) {
             console.log('[ERROR]', new Date(), 'File not found. Id:', fileId);
 
@@ -41,6 +41,12 @@ const getFile = (req, res) => {
                 message: 'File not found / 2',
                 responseTime: new Date(),
             });
+        }
+
+        if (fs.existsSync(filePath)) {
+            return fs.createReadStream(filePath)
+                .pipe(createDecipheriv('aes-256-cbc', config.fileEncryptionSecret, config.fileEncryptionVector))
+                .pipe(res);
         }
 
         const tgId = asset.telegramAssetId;

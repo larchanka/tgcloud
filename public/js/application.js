@@ -21,7 +21,7 @@ class App extends HTMLElement {
                     this.isLoggedIn = false;
                     this.renderLogin();
                 } else {
-                    this.userData = res.message;
+                    this.userData = window.TGCLOUD_userData = res.message;
                     this.isLoggedIn = true;
                     this.renderRoutes();
                 }

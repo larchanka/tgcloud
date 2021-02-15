@@ -13,6 +13,7 @@ console.log('[INFO]', new Date(), 'Starting application');
 
 const api = require('./services');
 const signin = require('./services/signin');
+const signout = require('./services/signout');
 const getOtlFile = require('./services/getOtlFile');
 const downloadFileOneTimeLink = require('./services/downloadFileOneTimeLink');
 const authentication = require('./middleware/authentication');
@@ -69,6 +70,7 @@ app.get('/session', authentication, function (req, res) {
 const router = express.Router();
 
 app.post('/signin', signin);
+app.get('/signout', signout);
 
 app.get('/otl/:otlChecksum/download', downloadFileOneTimeLink);
 app.get('/otl/:otlChecksum', getOtlFile);

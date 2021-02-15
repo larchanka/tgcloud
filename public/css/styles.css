@@ -643,3 +643,30 @@ h1.file-name {
 .otl a:hover {
     background-color: #fff;
 }
+
+/* USER HEADER */
+.user-header {
+    text-align: right;
+    padding: 0.5rem;
+    margin-bottom: 2rem;
+    background-color: #fafafa;
+    border-bottom: 1px solid #eee;
+}
+
+.user-header img {
+    max-width: 2rem;
+    max-height: 2rem;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+
+.user-header button {
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    font-size: .8rem;
+}
+
+.user-header button:active {
+    background-color: #eee;
+}
