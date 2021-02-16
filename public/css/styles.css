@@ -266,6 +266,7 @@ file-filters {
     top: 0;
     position: sticky;
     display: block;
+    z-index: 1;
 }
 
 .filters button {

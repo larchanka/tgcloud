@@ -6,9 +6,10 @@ const cleanDir = require('gulp-clean-dir');
 const htmlreplace = require('gulp-html-replace');
 const uglify = require('gulp-uglify');
 const babel = require('gulp-babel');
-const cleanCSS = require('gulp-clean-css');
-const autoprefixer = require('gulp-autoprefixer');
+// const cleanCSS = require('gulp-clean-css');
+// const autoprefixer = require('gulp-autoprefixer');
 const csso = require('gulp-csso');
+const htmlmin = require('gulp-htmlmin');
  
 function scripts() {
   return gulp.src('./public/js/*.js')
@@ -52,6 +53,7 @@ function finish() {
         'css': './styles/bundle.css',
         'js': './js/bundle.js'
     }))
+    .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(gulpCopy('./build/'))
     .pipe(gulp.dest('./build/'));
 }
