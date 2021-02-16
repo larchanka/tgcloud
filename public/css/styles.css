@@ -203,19 +203,35 @@ button {
 
 .file-item {
     background-color: #fff;
-    padding: .8rem 1rem .8rem .4rem;
+    padding: 0 1rem 0 1.2rem;
     border-bottom: .1rem solid #ddd;
     display: flex;
     align-content: space-between;
     border-left: .6rem solid #fff;
+    align-items: center;
 }
 
-.file-item > a {
+.file-item-actions {
+    flex: 1;
+}
+
+.file-item-container {
+    position: relative;
+}
+
+.file-checkbox {
+    position: absolute;
+    top: 1rem;
+    left: .6rem;
+}
+
+.file-item > .file-name {
     display: block;
-    flex: 3;
+    flex: 6;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 3rem;
 }
 
 .file-item > .file-date {
@@ -223,6 +239,7 @@ button {
     padding: 0 .2rem;
     line-height: 1.4rem;
     width: 10rem;
+    text-align: right;
 }
 
 .file-item > .file-size {
@@ -230,6 +247,7 @@ button {
     text-align: right;
 }
 
+.file-checkbox:checked + .file-item,
 .file-item:hover {
     background-color: #efefef;
     border-left-color: #ddd;
@@ -237,7 +255,7 @@ button {
 
 .filters {
     display: flex;
-    padding: 0.8rem 1rem;
+    padding: .8rem 1rem .8rem 1.8rem;
     margin-bottom: 1rem;
     border-bottom: .1rem solid #ccc;
     background-color: #fff;
@@ -261,7 +279,7 @@ file-filters {
 }
 
 #nameFilter {
-    flex: 1;
+    flex: 6;
 }
 
 #sizeFilter, #createdFilter {
@@ -357,8 +375,8 @@ files-list-categories {
 }
 
 .draggable.is-dragged {
-    background-color: yellow;
-    border-left-color: orange;
+    background-color: yellow !important;
+    border-left-color: orange !important;
 }
 
 .droppable.droppable-over {
@@ -522,7 +540,8 @@ h1.file-name {
     margin-bottom: 1rem;
 }
 
-.file-size, .file-date {
+.file-data .file-size,
+.file-data .file-date {
     margin-bottom: 0.5rem;
 }
 
@@ -680,4 +699,17 @@ h1.file-name {
 
 .user-header button:active {
     background-color: #eee;
+}
+
+[type="checkbox"] {
+    opacity: .2;
+}
+
+[type="checkbox"]:hover,
+[type="checkbox"]:checked {
+    opacity: 1;
+}
+
+file-item:hover [type="checkbox"] {
+    opacity: 1;
 }

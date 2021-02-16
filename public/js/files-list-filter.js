@@ -57,6 +57,7 @@ class Filters extends HTMLElement {
                     </div>
                 `;
                 }).join('')}
+                <div class="file-item-actions"></div>
             </div>
         `;
 

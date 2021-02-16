@@ -57,23 +57,30 @@ class FileItem extends HTMLElement {
         const isOwner = userId === createdBy
 
         this.innerHTML = `
-            <li id="file-${id}" data-id="${id}" class="file-item draggable" draggable="true">
+            <li class="file-item-container">
                 <input type="checkbox" id="file-checkbox-${id}" data-file-id="${id}" class="file-checkbox file-checkbox-item" />
-                &nbsp;
-                <span class="file-icon-span ${iconClass}"></span>
-                <a href="/file/${id}">
-                    ${fileName}
-                    ${!isOwner ? `<small class="shared">
-                    <img src="/img/user-group.svg" alt="shared" />
-                    </small>` : `
-                        <small class="shared">
-                            <img src="/img/${isPrivate ? 'shield' : 'padlock'}.svg" alt="shared" />
-                        </small>
-                    `}
-                </a>
-                <div class="file-date">${formatDate(createdAt, true)}</div>
-                <div class="file-size">
-                    ${formatSizeUnits(fileSize)}
+                <div id="file-${id}" data-id="${id}" class="file-item draggable" draggable="true">
+                    &nbsp;
+                    <span class="file-icon-span ${iconClass}"></span>
+                    <label class="file-name" for="file-checkbox-${id}">
+                        <a href="/file/${id}">
+                            ${fileName}
+                            ${!isOwner ? `<small class="shared">
+                            <img src="/img/user-group.svg" alt="shared" />
+                            </small>` : `
+                                <small class="shared">
+                                    <img src="/img/${isPrivate ? 'shield' : 'padlock'}.svg" alt="shared" />
+                                </small>
+                            `}
+                        </a>
+                    </label>
+                    <div class="file-date">${formatDate(createdAt, true)}</div>
+                    <div class="file-size">
+                        ${formatSizeUnits(fileSize)}
+                    </div>
+                    <div class="file-item-actions">
+                    
+                    </div>
                 </div>
             </li>
         `;
