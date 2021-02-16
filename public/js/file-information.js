@@ -76,6 +76,8 @@ class FileInformation extends HTMLElement {
                 image: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
                 pdf: ['pdf'],
                 audio: ['mp3', 'wav', 'weba'],
+                psd: ['psd'],
+                web: ['html', 'js', 'css', 'json'],
             };
 
             this.innerHTML = `
@@ -146,8 +148,18 @@ class FileInformation extends HTMLElement {
                                         ? `<div id="pdf-preview"></div>`
                                         : ''}
 
+                                    ${formats.web.indexOf(fileType) > -1
+                                        ? `<iframe id="html-preview" src="/api/v1/file/${fileData._id}/${assetData.assetHash}"></iframe>`
+                                        : ''}
+
                                     ${formats.audio.indexOf(fileType) > -1
                                         ? `<audio controls src="/api/v1/file/${fileData._id}/${assetData.assetHash}"></audio>`
+                                        : ''}
+
+                                    ${formats.psd.indexOf(fileType) > -1
+                                        ? `<div id="psd-target">
+                                            <i>Loading preview...</i>
+                                            <span class="${iconClass} icon-u"></span></div>`
                                         : ''}
 
                                     ${Object.keys(formats).map(k => formats[k]).flat().indexOf(fileType) === -1
@@ -209,6 +221,29 @@ class FileInformation extends HTMLElement {
 
             if (fileType === 'pdf') {
                 PDFObject.embed(`/api/v1/file/${fileData._id}/${assetData.assetHash}`, "#pdf-preview", { height: '100%', width: '100%'});
+            }
+
+            if (fileType === 'psd') {
+                var reader = new FileReader();
+                document.querySelectorAll('canvas').forEach(function(element) {
+                    const parent = element.parentNode;
+                    parent.removeChild(element);
+                });
+
+                reader.onload = function(e) {
+                    const input = new Uint8Array(e.target.result);
+                    const parser = new PSD.Parser(input);
+
+                    parser.parse();
+                    document.getElementById('psd-target').innerHTML = '';
+                    document.getElementById('psd-target').appendChild(parser.imageData.createCanvas(parser.header));
+                };
+
+                fetch(`/api/v1/file/${fileData._id}/${assetData.assetHash}`)
+                    .then(resp => resp.blob())
+                    .then((psdData) => {
+                        reader.readAsArrayBuffer(psdData);
+                    });
             }
         }
     }

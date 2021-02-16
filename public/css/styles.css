@@ -458,6 +458,7 @@ files-list-categories {
     justify-content: stretch;
     align-items: center;
     flex-direction: column;
+    overflow: auto;
 }
 
 .file-preview-content {
@@ -472,6 +473,9 @@ files-list-categories {
     background-color: #f5f5f5;
     font-weight: 700;
     font-size: .8rem;
+    position: sticky;
+    left: 0;
+    top: 0;
 }
 
 .file-preview-view {
@@ -485,6 +489,13 @@ files-list-categories {
 .file-preview * {
     max-width: 100%;
     max-height: 100%;
+}
+
+.file-preview iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background-color: #fff;
 }
 
 .unknown-file-preview {
